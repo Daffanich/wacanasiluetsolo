@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wacana Siluet Solo - Rundown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400&display=swap');
+        
+        :root {
+            --bg-deep: #05070a;
+            --accent: #fbbf24; /* Amber 400 */
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-deep);
+            color: #e2e8f0;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(251, 191, 36, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .font-serif-aesthetic {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.05em;
+        }
+
+        .card-glass {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card-glass:hover {
+            border-color: rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .card-done {
+            opacity: 0.3;
+            filter: grayscale(1) blur(0.5px);
+        }
+
+        /* Custom Checkbox */
+        .checkbox-custom {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .checkbox-custom:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .checkbox-custom:checked::after {
+            content: '✓';
+            position: absolute;
+            color: black;
+            font-size: 14px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--border) 10%, var(--border) 90%, transparent);
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 min-h-screen">
+
+    <div class="max-w-xl mx-auto">
+        <!-- Header Section -->
+        <header class="mb-16">
+            <div class="flex justify-between items-end mb-4">
+                <span class="mono text-[10px] text-yellow-600 font-bold uppercase tracking-[0.3em]">Field Report 11.04.26</span>
+                <span id="mission-status" class="mono text-[10px] bg-yellow-500/10 text-yellow-500 px-2 py-1 rounded">PENDING</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-serif-aesthetic italic leading-tight text-white mb-2">Wacana<br><span class="text-yellow-500">Siluet Solo</span></h1>
+            <p class="text-slate-500 text-sm font-light max-w-xs">Eksplorasi garis arsitektur dan bayang-bayang kota dalam satu putaran waktu.</p>
+        </header>
+
+        <!-- Progress Tracker -->
+        <div class="mb-12">
+            <div class="flex justify-between text-[10px] mono mb-3 text-slate-400">
+                <span>INTENSITAS EKSPLORASI</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div class="w-full bg-white/5 h-[2px] rounded-full overflow-hidden">
+                <div id="progress-bar" class="bg-yellow-500 h-full w-0 transition-all duration-1000"></div>
+            </div>
+        </div>
+
+        <!-- Budget Receipt Style -->
+        <section class="mb-16 card-glass rounded-2xl p-6">
+            <h2 class="mono text-[11px] font-bold text-slate-500 uppercase mb-6 tracking-widest flex items-center">
+                <span class="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span> Estimasi Logistik
+            </h2>
+            <div class="space-y-4 text-sm mono">
+                <div class="flex justify-between items-center text-slate-400">
+                    <span>KRL Commuter (PP)</span>
+                    <span class="text-white">16.000</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-400">
+                    <span>Batik Solo Trans (4x)</span>
+                    <span class="text-white">16.000</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-400">
+                    <span>HTM Rasamadu (Cubic)</span>
+                    <span class="text-white">70.000</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-400 border-b border-white/5 pb-4">
+                    <span>Makan & Minum</span>
+                    <span class="text-white">30.000</span>
+                </div>
+                <div class="flex justify-between items-center pt-2 text-yellow-500 font-bold text-lg">
+                    <span>TOTAL</span>
+                    <span>Rp132.000</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <div class="relative">
+            <div class="timeline-line"></div>
+            <div id="rundown-container" class="space-y-10">
+                <!-- Items injected by JS -->
+            </div>
+        </div>
+
+        <!-- Vibe Quote -->
+        <section class="mt-20 border-t border-white/5 pt-10 text-center">
+            <p class="font-serif-aesthetic italic text-slate-500 text-xl">
+                "Beberapa rencana terbaik adalah yang tetap menjadi bayang-bayang sampai ia benar-benar menapak di tanah Purwosari."
+            </p>
+        </section>
+
+        <footer class="mt-20 pb-12 text-center">
+            <div class="mono text-[9px] text-slate-700 uppercase tracking-widest">
+                cwonya mia &copy; 2026
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const rundownData = [
+            {
+                time: "08:15",
+                title: "Keberangkatan",
+                desc: "LPN 08.25. Tugu 08.49. Amankan posisi duduk di sisi kiri kereta untuk pemandangan terbaik.",
+                type: "transport"
+            },
+            {
+                time: "10:15",
+                title: "Mobilisasi Rasamadu",
+                desc: "BST Koridor 1. Masuk ke sejarah melalui gerbang Gembongan.",
+                type: "transport"
+            },
+            {
+                time: "10:45",
+                title: "Eksplorasi Siluet",
+                desc: "Fokus pada Cubic Room. Visualisasikan sejarah dalam bayang-bayang gedung tua.",
+                type: "mission"
+            },
+            {
+                time: "12:15",
+                title: "Jeda Spiritual",
+                desc: "Dzuhur di Mushola Rasamadu. Menenangkan diri sebelum logistik siang.",
+                type: "pause"
+            },
+            {
+                time: "13:00",
+                title: "Logistik Siang",
+                desc: "Selat Solo Daging. Nutrisi efisien untuk mobilitas sore.",
+                type: "food"
+            },
+            {
+                time: "14:15",
+                title: "Mural Hunting",
+                desc: "Eksplorasi koridor Gatot Subroto. Dokumentasikan setiap narasi visual.",
+                type: "mission"
+            },
+            {
+                time: "15:15",
+                title: "Rest & Toleransi",
+                desc: "Ashar di Masjid Al-Hikmah. Mengamati harmoni bangunan yang berdampingan.",
+                type: "pause"
+            },
+            {
+                time: "16:15",
+                title: "Misi Kepulangan",
+                desc: "BST ke Purwosari. KRL 16.52. Wacana tuntas.",
+                type: "transport"
+            }
+        ];
+
+        function renderRundown() {
+            const container = document.getElementById('rundown-container');
+            container.innerHTML = rundownData.map((item, index) => {
+                return `
+                    <div class="relative pl-14 transition-all duration-500" id="item-${index}">
+                        <div class="absolute left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-700 z-10 dot-indicator"></div>
+                        <div class="card-glass p-5 rounded-2xl group flex items-start">
+                            <input type="checkbox" class="checkbox-custom mt-1 mr-4 shrink-0" onchange="updateProgress()">
+                            <div>
+                                <span class="mono text-[10px] text-yellow-600 block mb-1 uppercase">${item.time}</span>
+                                <h3 class="text-lg font-bold text-white group-hover:text-yellow-500 transition-colors">${item.title}</h3>
+                                <p class="text-sm text-slate-400 mt-2 leading-relaxed font-light">${item.desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateProgress() {
+            const checks = document.querySelectorAll('input[type="checkbox"]');
+            const total = checks.length;
+            let checked = 0;
+
+            checks.forEach((cb, index) => {
+                const item = document.getElementById(`item-${index}`);
+                const dot = item.querySelector('.dot-indicator');
+                if(cb.checked) {
+                    checked++;
+                    item.classList.add('card-done');
+                    dot.style.backgroundColor = '#fbbf24';
+                    dot.style.borderColor = '#fbbf24';
+                    dot.style.boxShadow = '0 0 10px rgba(251, 191, 36, 0.4)';
+                } else {
+                    item.classList.remove('card-done');
+                    dot.style.backgroundColor = '#05070a';
+                    dot.style.borderColor = '#334155';
+                    dot.style.boxShadow = 'none';
+                }
+            });
+
+            const percent = Math.round((checked / total) * 100);
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-text').innerText = percent + '%';
+            
+            const status = document.getElementById('mission-status');
+            if(percent === 0) status.innerText = "PENDING";
+            else if(percent < 100) status.innerText = "EXECUTING";
+            else status.innerText = "ARCHIVED";
+        }
+
+        window.onload = renderRundown;
+    </script>
+</body>
+</html>
